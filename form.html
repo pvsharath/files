@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+	button{
+		border: none;
+		background-color: burlywood;
+		padding: 8px;
+		margin-left: 10px;
+	}
+	body{
+		background-color: blue;
+		color: white;
+		margin-left: 37%;
+		font-size: 22px;
+	}
+
+</style>
+</head>
+<body>
+<h1>Create Survey Form</h1>
+<div id="show"></div>
+<script>
+let countryArr = ['USA','India','China','UK','Bangladesh'];
+let genderArr = ['Male','Female'];
+show(); 
+function show(){
+	let str = 'First Name : <input type="text" id="fname"><br/><br/>';
+	    str+= 'Last Name : <input type="text" id="lname"><br/><br/>';
+	    str+= 'Date of Birth : <input type="text" id="dob"><br/><br/>';
+	    str+= 'Country : '+makeCountryDD('dd',countryArr,'Select Country','')+ '<br/><br/>';
+	    str+= 'Gender : '+makeCheckboxes('cb',genderArr)+ '<br/><br/>';
+	    str+= 'Profession : <input type="text" id="prof"><br/><br/>';
+	    str+= 'Email : <input type="text" id="email"><br/><br/>';
+	    str+= 'Mobile Number : <input type="text" id="mobile"><br/><br/>';
+	    str+= '<button onclick=\'reset()\'>Reset</button>';
+	    str+= '<button onclick=\'submit()\'>Submit</button>';
+	    document.getElementById('show').innerHTML=str;
+}
+function submit(){
+	let fname = document.getElementById('fname').value;
+	let lname = document.getElementById('lname').value;
+	let dob = document.getElementById('dob').value;
+	let dd = document.getElementById('dd').value;
+	let gender = [];
+	let names = document.getElementsByName('cb');
+	for(let i=0;i<names.length;i++){
+		if(names[i].checked){
+          gender.push(names[i].value);
+ 		}
+	}
+	let email = document.getElementById('email').value;
+	let prof = document.getElementById('prof').value;
+	let mobile = document.getElementById('mobile').value;
+	if(fname==='')
+	  alert("First name is required");
+	else if(lname==='')
+	  alert("Last name is required");
+	else if(dob==='')
+	  alert("Date of Birth is required");
+	else if(dd==='')
+	  alert("Choose Country");
+	else if(gender.length<=0)
+	  alert("Select the Gender");
+	else if(email==='')
+	  alert("Email is required");
+	else if(prof==='')
+	  alert("Profession is required");
+	else if(mobile==='')
+	  alert("Mobile number is required");
+	else{
+		alert("Fisrt Name : "+fname+"Last Name : "+lname+"Date of Birth : "+dob+"Country : "+dd+"Gender : "+gender.join(',')+"Email: "+email+"Profession: "+prof+"Fisrt Mobile Number : "+mobile);
+		show();
+	}
+}
+function reset(){
+	document.getElementById('fname').value = '';
+	document.getElementById('lname').value = '';
+	document.getElementById('dob').value = '';
+	document.getElementById('dd').value = '';
+	let names = document.getElementsByName('cb');
+	for(let i=0;i<names.length;i++){
+		names[i].checked = false;
+	}
+	document.getElementById('prof').value = '';
+	document.getElementById('email').value = '';
+	document.getElementById('mobile').value = '';
+}
+
+	   function makeCountryDD(id,arr,firstItem,selValue){
+            const arr1=arr.map(function(opt){
+                if(opt==selValue)
+                return '<option selected>'+opt+'</option>';
+                else
+                return '<option>'+opt+'</option>';
+            });
+            let first='<option disabled selected value="">'+firstItem+'</option>';
+            if(selValue!='')
+            first='<option disabled >'+firstItem+'</option>';
+            let s1='<select id="'+id+'">'+first+arr1.join('')+'</select>';
+            return s1;
+            
+        }
+        function makeCheckboxes(name,arr){
+                const arr1 =arr.map(function(val){
+                    let s1 ='<input type="checkbox" name="'+name+'" value="'+val+'">'+val;
+                    return s1;
+                });
+                return arr1.join('');
+            }
+</script>
+</body>
+</html>
